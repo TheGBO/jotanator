@@ -9,17 +9,19 @@ from moviepy.editor import VideoFileClip
 from dotenv import load_dotenv
 
 load_dotenv()
-
-
 client = commands.Bot()
 
+#check if the bot is working
 @client.slash_command(name="ping", description="checks if the bot is available")
 async def ping(ctx):
     await ctx.send("pong", ephemeral=False)
 
+input_processing_message = "Processing input... <:magago:1000115411372752966>"
+
+#what the dog doing
 @client.slash_command(name="dogdoing", description="WHAT the dog doing (attach an image please)")
 async def dogdoing(ctx, image_url):
-    await ctx.send("Processing input... <:magago:1000115411372752966>")
+    await ctx.send(input_processing_message)
     response = requests.get(image_url)
     img = Image.open(BytesIO(response.content))
     img = img.resize((180,204))
@@ -30,10 +32,25 @@ async def dogdoing(ctx, image_url):
         image_binary.seek(0)
         await ctx.send(file=disnake.File(fp=image_binary, filename='image.png'))
 
+#kanye west
+@client.slash_command(name="kanyewest", description="kanye west doing funny stuff")
+async def kanyewest(ctx, image_url):
+    await ctx.send(input_processing_message)
+    response = requests.get(image_url)
+    img = Image.open(BytesIO(response.content))
+    img = img.resize((174,164))
+    kanyeimg = Image.open("res/kanyewest.png")
+    kanyeimg.paste(img, (240,395))
+    with BytesIO() as image_binary:
+        kanyeimg.save(image_binary, 'PNG')
+        image_binary.seek(0)
+        await ctx.send(file=disnake.File(fp=image_binary, filename='image.png'))
+
+#mp4 to gif
 @client.slash_command(name="mp4togif", description="converts mp4 to gif")
 async def mp4togif(ctx, video_url):
     try:
-        await ctx.send("Processing input... <:magago:1000115411372752966>")
+        await ctx.send(input_processing_message)
         response = requests.get(video_url).content
         with open('output/togif.mp4', 'wb') as handler:
             handler.write(response)
@@ -45,4 +62,6 @@ async def mp4togif(ctx, video_url):
         await ctx.send("Error while processing file input or sending output")
 
 
+
+#runs the bot
 client.run(os.getenv("TOKEN"))
