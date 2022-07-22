@@ -1,10 +1,14 @@
 from fileinput import filename
+import os
 import disnake
 from disnake.ext import commands
 from PIL import Image
 import requests
 from io import BytesIO
 from moviepy.editor import VideoFileClip
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 client = commands.Bot()
@@ -38,5 +42,4 @@ async def mp4togif(ctx, video_url):
             await ctx.send("content", file=disnake.File("output/togif.gif"))
 
 
-with open("token.txt", "r") as f:
-    client.run(f.read())
+client.run(os.getenv("TOKEN"))
