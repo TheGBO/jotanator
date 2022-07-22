@@ -38,4 +38,5 @@ async def mp4togif(ctx, video_url):
             await ctx.send("content", file=disnake.File("output/togif.gif"))
 
 
-client.run("MTAwMDEwNTg3OTA5OTY5MTA5OA.Gg6eSN.G5IX9NurUAsnUHQYs_Xr5hrVLocJJS_NtDzoOY")
+with open("token.txt", "r") as f:
+    client.run(f.read())
