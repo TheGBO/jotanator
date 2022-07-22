@@ -32,14 +32,17 @@ async def dogdoing(ctx, image_url):
 
 @client.slash_command(name="mp4togif", description="converts mp4 to gif")
 async def mp4togif(ctx, video_url):
-    await ctx.send("Processing input... (I'm not esmbot, but this kinda may take a while) <:magago:1000115411372752966>")
-    response = requests.get(video_url).content
-    with open('output/togif.mp4', 'wb') as handler:
-        handler.write(response)
-        clip = VideoFileClip("output/togif.mp4").resize(0.5)
-        clip.write_gif("output/togif.gif", fps=clip.fps/1.5, program="ffmpeg", )
-        with open("output/togif.gif", "rb") as g:
-            await ctx.send("content", file=disnake.File("output/togif.gif"))
+    try:
+        await ctx.send("Processing input... (I'm not esmbot, but this kinda may take a while) <:magago:1000115411372752966>")
+        response = requests.get(video_url).content
+        with open('output/togif.mp4', 'wb') as handler:
+            handler.write(response)
+            clip = VideoFileClip("output/togif.mp4").resize(0.5)
+            clip.write_gif("output/togif.gif", fps=clip.fps/1.5, program="ffmpeg", )
+            with open("output/togif.gif", "rb") as g:
+                await ctx.send("content", file=disnake.File("output/togif.gif"))
+    except:
+        await ctx.send("Error while processing file input or sending output")
 
 
 client.run(os.getenv("TOKEN"))
