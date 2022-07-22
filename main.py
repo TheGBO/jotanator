@@ -37,7 +37,7 @@ async def mp4togif(ctx, video_url):
         response = requests.get(video_url).content
         with open('output/togif.mp4', 'wb') as handler:
             handler.write(response)
-            clip = VideoFileClip("output/togif.mp4").resize(0.5)
+            clip = VideoFileClip("output/togif.mp4").resize(0.35)
             clip.write_gif("output/togif.gif", fps=clip.fps/1.5, program="ffmpeg", )
             with open("output/togif.gif", "rb") as g:
                 await ctx.send("content", file=disnake.File("output/togif.gif"))
