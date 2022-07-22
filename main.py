@@ -19,7 +19,7 @@ async def ping(ctx):
 
 @client.slash_command(name="dogdoing", description="WHAT the dog doing (attach an image please)")
 async def dogdoing(ctx, image_url):
-    await ctx.send("Processing input... (I'm not esmbot, but this kinda may take a while) <:magago:1000115411372752966>")
+    await ctx.send("Processing input... <:magago:1000115411372752966>")
     response = requests.get(image_url)
     img = Image.open(BytesIO(response.content))
     img = img.resize((180,204))
@@ -33,7 +33,7 @@ async def dogdoing(ctx, image_url):
 @client.slash_command(name="mp4togif", description="converts mp4 to gif")
 async def mp4togif(ctx, video_url):
     try:
-        await ctx.send("Processing input... (I'm not esmbot, but this kinda may take a while) <:magago:1000115411372752966>")
+        await ctx.send("Processing input... <:magago:1000115411372752966>")
         response = requests.get(video_url).content
         with open('output/togif.mp4', 'wb') as handler:
             handler.write(response)
