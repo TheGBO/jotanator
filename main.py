@@ -1,5 +1,6 @@
 from fileinput import filename
 import os
+import string
 import disnake
 from disnake.ext import commands
 from PIL import Image
@@ -7,9 +8,12 @@ import requests
 from io import BytesIO
 from moviepy.editor import VideoFileClip
 from dotenv import load_dotenv
+import imageio
 
 load_dotenv()
-client = commands.Bot()
+activity = disnake.Game("ayo did you know that jotanator (le epic gamer bot) is open source btw (yooooo benos gosta)) https://github.com/TheGBO/jotanator")
+client = commands.Bot(activity=activity)
+
 
 #check if the bot is working
 @client.slash_command(name="ping", description="checks if the bot is available")
@@ -61,6 +65,17 @@ async def mp4togif(ctx, video_url):
     except:
         await ctx.send("Error while processing file input or sending output")
 
+@client.slash_command(name="gifspeed", description="changes the speed of a GIF")
+async def gifspeed(ctx, gifurl, fps_rate):
+    await ctx.send(input_processing_message)
+    response = requests.get(gifurl).content
+    with open('output/gifspeed.gif', 'wb') as handler:
+        handler.write(response)
+        
+        gif = imageio.mimread('output/gifspeed.gif')
+        imageio.mimsave('output/gifspeedfinal.gif', gif, fps=fps_rate)
+        await ctx.send("content", file=disnake.File("output/gifspeedfinal.gif"))
+        os.unlink('output/gifspeedfinal.gif')
 
 
 #runs the bot
